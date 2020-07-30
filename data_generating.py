@@ -24,6 +24,7 @@ class data_generating:
     def get_Data(self):
     	'''
     	Decoding the json file one by one
+    	Return json_data: decoded data
     	'''
         json_data = []
         file = open(self.jsonfile)
@@ -35,8 +36,8 @@ class data_generating:
 
     def get_Gate(self):
     	'''
-    	Return attribute_gate: feature name for sequence1 and 2, for building the model, return two
-    	different name lists for the same features.
+    	Return attribute_gate: feature name for sequence1 and 2, 
+    	for building the model, return two different name lists for the same features.
     	'''
         attribute_gate = []
         attribute_gate2 = []
@@ -48,7 +49,7 @@ class data_generating:
 
     def get_Net(self):
     	'''
-    	Getting the net features name and return them in a list
+    	Return attribute_net: list of net feature names
     	'''
         attribute_net = []
         for i in (((self.json_data[0])['input']['Sequence 1'])[0][1]).items():
