@@ -20,18 +20,24 @@ class data_generating:
 #         self.X,self.Y = self.generate_template_X()
         self.name = self.gate_attribute+self.net_attribute
         self.X,self.Y = self.generate_short_X()
-        
-    ## read data
+
     def get_Data(self):
+    	'''
+    	Decoding the json file one by one
+    	'''
         json_data = []
         file = open(self.jsonfile)
         for line in file:
             json_line = json.loads(line)
             json_data.append(json_line)
         return json_data
-    
-    ## gate attribute names
+
+
     def get_Gate(self):
+    	'''
+    	Return attribute_gate: feature name for sequence1 and 2, for building the model, return two
+    	different name lists for the same features.
+    	'''
         attribute_gate = []
         attribute_gate2 = []
         for i in (((self.json_data[0])['input']['Sequence 1'])[0][0]).items():
@@ -39,8 +45,11 @@ class data_generating:
             attribute_gate2.append(i[0]+'_2')
         return attribute_gate,attribute_gate2
     
-    ## net attribute names
+
     def get_Net(self):
+    	'''
+    	Getting the net features name and return them in a list
+    	'''
         attribute_net = []
         for i in (((self.json_data[0])['input']['Sequence 1'])[0][1]).items():
             attribute_net.append(i[0])
@@ -49,9 +58,10 @@ class data_generating:
     
     def generate_template_X(self):
         '''
-        return X:
+        Transform the data from json to tensors
+        Return X:
         (5196 data* 3 sequence/data*sequence length)
-        return Y:
+        Return Y:
         (5196 data *3 sequence)
         
         '''
@@ -84,9 +94,10 @@ class data_generating:
     
     
     def generate_alternating_df(self,seq_len):
-        '''generating dataframe for LSTM'''
-        
-        ## a problem is that the sequence 3 has one more feature than seq1 and 2, which is called rise_fall
+        '''Generating dataframe for LSTM
+        Initiate a dataframe with columns name of gate and net
+        Return initial_df: dataframe with one get and one net data in each row
+        '''
         initial_df = pd.DataFrame([0]*(len(self.gate_attribute)+len(self.net_attribute))).transpose()
         initial_df.columns = self.name
         for ex in range(len(self.X)):
@@ -104,9 +115,10 @@ class data_generating:
         
     def generate_short_X(self):
         '''
-        return X:
+        Similar to generate_alternating_df(), but only get the data from sequence1 and 2.
+        Return X:
         (5196 data, 2 sequence/data,sequence length)
-        return Y:
+        Return Y:
         (5196 data *2 sequence)
         
         '''
@@ -134,9 +146,10 @@ class data_generating:
 
     def generate_sequence3(self):
         '''
-        return two X:
+        Similar to generate_alternating_df(), but only get the data from sequence3.
+        Return two X:
         (5196 data, 1 sequence/data,sequence length)*2
-        return Y:
+        Return Y:
         (5196 data *1 sequence)
         
         '''
