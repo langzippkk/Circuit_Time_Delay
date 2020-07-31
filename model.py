@@ -126,7 +126,7 @@ def train_CNN(combined_train,Y_train,combined_test,Y_test,batch_size,drop_out,lr
 
 def train_Combined(combined_train,Y_train,combined_test,Y_test,batch_size,drop_out,lr,epochs):
     '''
-    Input X_train,X_test: shape (number of sequences,10,1,17/24)
+    Input X_train,X_test: shape (10,number of sequences,17/24)
     Y_train,Y_test: (number of sequences,)
     batch_size: batch size for training LSTM
     drop_out: drop_out rate for LSTM layers
@@ -151,8 +151,9 @@ def train_Combined(combined_train,Y_train,combined_test,Y_test,batch_size,drop_o
         y_train, y_valid = np.array(Y_train)[train_index], np.array(Y_train)[test_index]
         
         serie_size= 1
-        n_features_gate = len(gate_train[0][0][0])
-        n_features_net =  len(net_train[0][0][0])
+        n_features_gate = len(combined_train[0][0][0])
+        n_features_net =  len(combined_train[1][0][0])
+        print( n_features_net)
         gate_1 = create_dense(serie_size,n_features_gate,drop_out)
         gate_3 = create_dense(serie_size,n_features_gate,drop_out)
         gate_5 = create_dense(serie_size,n_features_gate,drop_out)
