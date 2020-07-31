@@ -22,10 +22,10 @@ class data_generating:
         self.X,self.Y = self.generate_short_X()
 
     def get_Data(self):
-    	'''
-    	Decoding the json file one by one
-    	Return json_data: decoded data
-    	'''
+        '''
+        Decoding the json file one by one
+        Return json_data: decoded data
+        '''
         json_data = []
         file = open(self.jsonfile)
         for line in file:
@@ -35,10 +35,10 @@ class data_generating:
 
 
     def get_Gate(self):
-    	'''
-    	Return attribute_gate: feature name for sequence1 and 2, 
-    	for building the model, return two different name lists for the same features.
-    	'''
+        '''
+        Return attribute_gate: feature name for sequence1 and 2, 
+        for building the model, return two different name lists for the same features.
+        '''
         attribute_gate = []
         attribute_gate2 = []
         for i in (((self.json_data[0])['input']['Sequence 1'])[0][0]).items():
@@ -48,9 +48,9 @@ class data_generating:
     
 
     def get_Net(self):
-    	'''
-    	Return attribute_net: list of net feature names
-    	'''
+        '''
+        Return attribute_net: list of net feature names
+        '''
         attribute_net = []
         for i in (((self.json_data[0])['input']['Sequence 1'])[0][1]).items():
             attribute_net.append(i[0])
