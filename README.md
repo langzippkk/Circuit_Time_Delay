@@ -1,6 +1,11 @@
 # Circuit_Time_Delay
 
 
+---Archive
+
+The trained LSTM, CNN-LSTM, MultiInput-LSTM model
+
+
 ---CNN-LSTM.py
 
 Train and tune parameter for CNN-LSTM model, output the testing MSE
