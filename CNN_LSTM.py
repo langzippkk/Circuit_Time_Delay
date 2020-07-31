@@ -8,7 +8,7 @@ from keras.models import Sequential, Model
 from keras.optimizers import RMSprop
 from sklearn.model_selection import KFold
 from matplotlib import pyplot as plt
-from utils import generating_tensor_X,generating_tensor_Y,generating_tensor_X_test,generating_CNN_intput,\
+from utils import generating_tensor_X,generating_tensor_Y,generating_CNN_intput,\
 test_train
 from keras.layers.convolutional import Conv1D
 from keras.layers import Dense, Dropout, Activation, Flatten
@@ -21,6 +21,14 @@ import pandas as pd
 from sklearn.metrics import mean_squared_error
 import math
 if __name__ == "__main__":
+	'''
+    This main function tunes hyperparameter by using the model in models.py and find the 
+    best hyperparameters to train a model.
+    Output: print the testing MSE for the best model
+
+    '''
+
+    # uncomment it if read directly from json
 	# file = 'data.json'
 	# data = data_generating(file)
 	# X_init,Y_init =data.generate_short_X()
