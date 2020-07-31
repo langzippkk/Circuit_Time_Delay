@@ -74,6 +74,26 @@ def generating_tensor_X(X):
         batch.append(time_batch)
     return batch
 
+
+def generating_tensor_X_test(X):
+    '''
+    Input: The X dataframe with 1 gate and 1 net each row.
+    X shape (number of gate-net,41 features)
+    Return batch for LSTM model: shape(number of sequences,4 sliding window,(24+17)*2 features),
+    the tensor that using 2 gates and 2 nets in a single sliding windows
+
+    '''
+    batch = []
+    for i in range(1,len(X)-3,5):
+        start = i
+        time_batch = []
+        for j in range(4):
+            temp = np.concatenate((X.loc[start+j].values,X.loc[start+j+1].values))
+            time_batch.append(temp)
+        batch.append(time_batch)
+    return batch
+
+
 def generating_tensor_Y(Y):
     '''
     Input: The Y dataframe with 2 labels in a row.
