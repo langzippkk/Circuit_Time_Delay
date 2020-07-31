@@ -2,7 +2,6 @@ from keras.models import load_model
 from keras import optimizers
 from keras.utils import plot_model
 from keras.models import Sequential, Model
-# from keras.layers import Dense, LSTM, RepeatVector, TimeDistributed
 from tensorflow.python.keras.layers import Input,Dense,LSTM
 from tensorflow.python.keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten
@@ -19,6 +18,18 @@ from matplotlib import pyplot as plt
 import numpy as np
 
 def train_single_LSTM(X_train,Y_train,X_test,Y_test,batch_size,drop_out,lr,epochs):
+    '''
+    Input X_train,X_test: shape(number of sequences,4 sliding window,(24+17)*2 features)
+    Y_train,Y_test: (number of sequences,1)
+    batch_size: batch size for training LSTM
+    drop_out: drop_out rate for LSTM layers
+    lr: learning rate of Adam optimizer
+    epochs: training epochs
+
+    This function define the structure of LSTM model and trains with Adam optimizer.
+    Output: a real number of average of validation MSE of 3-fold cross validation. 
+
+    '''
     serie_size= len(X_train[0]) # 4
     n_features =len(X_train[0][0]) # 82
 #     epochs = parameter_dict['epochs']
@@ -63,6 +74,17 @@ def train_single_LSTM(X_train,Y_train,X_test,Y_test,batch_size,drop_out,lr,epoch
 
 
 def train_CNN(combined_train,Y_train,combined_test,Y_test,batch_size,drop_out,lr,epochs):
+    '''
+    Input X_train,X_test: shape (number of sequences,4,2,41)
+    Y_train,Y_test: (number of sequences,)
+    batch_size: batch size for training LSTM
+    drop_out: drop_out rate for LSTM layers
+    lr: learning rate of Adam optimizer
+    epochs: training epochs
+
+    This function define the structure of CNN-LSTM model and trains with Adam optimizer.
+    Output: a real number of average of validation MSE of 3-fold cross validation. 
+    '''
     def create_CNN(serie_size,n_features,drop_out):
         inputs = Input(shape=(serie_size,n_features))     
         x =(Conv1D(64,kernel_size=2,input_shape=(serie_size,n_features),padding='same',activation='relu'))(inputs)
@@ -103,6 +125,17 @@ def train_CNN(combined_train,Y_train,combined_test,Y_test,batch_size,drop_out,lr
 
 
 def train_Combined(combined_train,Y_train,combined_test,Y_test,batch_size,drop_out,lr,epochs):
+    '''
+    Input X_train,X_test: shape (number of sequences,10,1,17/24)
+    Y_train,Y_test: (number of sequences,)
+    batch_size: batch size for training LSTM
+    drop_out: drop_out rate for LSTM layers
+    lr: learning rate of Adam optimizer
+    epochs: training epochs
+
+    This function define the structure of MultiInput-LSTM model and trains with Adam optimizer.
+    Output: a real number of average of validation MSE of 3-fold cross validation. 
+    '''
     def create_dense(serie_size,n_features,drop_out):
         inputs = Input(shape=(serie_size,n_features))
         x = Dense(10,activation='relu')(inputs)
