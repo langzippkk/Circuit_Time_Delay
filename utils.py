@@ -188,7 +188,7 @@ def generate_combined(gate_train,net_train):
     gate_train shape: (number of sequences,length of gate features)
     net_train shape: (number of sequences,length of net features) 
     Extract each gate and net and reshape it for Dense net
-    Return list: 10 concatenated tensors with shape (number of sequences,10,1,17/24)
+    Return list: 10 concatenated tensors with shape (10,number of sequences,17/24)
 
     '''
     input1_train = np.asarray([i[0][0].reshape(1,17) for i in gate_train])
