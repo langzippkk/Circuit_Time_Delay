@@ -10,16 +10,13 @@ from sklearn import preprocessing
 from sklearn.svm import SVR
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
-
-
-
 class preprocessing_data():
-  '''
-  This class is the feature engineering part and it delete columns if they have the same 
-  value, scaling the numerical values,transform the columns if they have only two values 
-  to categorical and transform the locational data into clusters.
+    """
+    This class is the feature engineering part and it delete columns if they have the same 
+    value, scaling the numerical values,transform the columns if they have only two values 
+    to categorical and transform the locational data into clusters.
+    """
 
-  '''
     def __init__(self,dataframe,train_split):
         self.init_data = dataframe
         self.X_columns = ['cell_threshold_index', 'cell_type','cell_min_rise_delay', 'number_of_pins_gate', 'area_gate', 'cell_min_fall_delay',
@@ -35,25 +32,24 @@ class preprocessing_data():
        'ID', 'base_name', 'number_of_wires', 'pin_capacitance_min_fall','M6','net_name',
        'number_of_leaf_drivers', 'net_resistance_min', 'ba_capacitance_min']
         
-        
-    def filter_columns(self,X):
-      '''
-      Return X: the dataframe that deleted the column that has same values
 
-      '''
+    def filter_columns(self,X):
+        '''
+        Return X: the dataframe that deleted the column that has same values
+
+        '''
         X.columns = self.X_columns
         X = X.drop(columns=['ID','temperature_max','temperature_min','cell_name','M1','M5','base_name','number_of_leaf_drivers',\
                   'M6', 'net_name','cell_threshold_index','cell_type'])
         X = X.drop(columns=['number_of_pins_gate','height'])
         return X
         
-
     def normalise(self,X):
-      '''
-      Return X: the dataframe that has numerical columns scaled using:
-      X_std * (X_max - X_min) + X_min
+        '''
+        Return X: the dataframe that has numerical columns scaled using:
+        X_std * (X_max - X_min) + X_min
 
-      '''
+        '''
         min_max_scaler = preprocessing.MinMaxScaler()
         cell_min_rise_delay = X['cell_min_rise_delay'].values.reshape((-1, 1))
         cell_min_rise_delay_scaled = min_max_scaler.fit_transform(cell_min_rise_delay)
@@ -71,11 +67,11 @@ class preprocessing_data():
     
     
     def categorical(self,X):
-      '''
-      Return X: the dataframe that has the columns transformed to 0/1 variable if they
-      only have two values
+        '''
+        Return X: the dataframe that has the columns transformed to 0/1 variable if they
+        only have two values
 
-      '''
+        '''
         M4 = X['M4'].values
         M7 = X['M7'].values
         M3 = X['M3'].values
@@ -99,10 +95,10 @@ class preprocessing_data():
         return X
     
     def location_transform(self,X):
-      '''
-      Return X: the datafram that has transformed the locational data using kmeans algorithm
-      
-      '''
+        '''
+        Return X: the datafram that has transformed the locational data using kmeans algorithm
+        
+        '''
         x_location = X['x_location'].values
         y_location = X['y_location'].values
         X['x_location'] = [0 if i=='pin' else i for i in x_location]
