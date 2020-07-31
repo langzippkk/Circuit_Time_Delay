@@ -5,7 +5,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import KFold
-from utils import generating_tensor_X,generating_tensor_Y,generating_tensor_X_test,generating_CNN_intput,\
+from utils import generating_tensor_X,generating_tensor_Y,generating_CNN_intput,\
 test_train,generating_tensor_X_SVM
 import pandas as pd
 from sklearn.metrics import mean_squared_error
@@ -13,6 +13,13 @@ import numpy as np
 
 
 if __name__ == "__main__":
+	'''
+	This main function runs from end to end, read the json format data, preprocessing the data,tuning
+	the SVR model and train with the best hyperparameters.
+	Output: print the testing MSE for best model
+	'''
+
+	## uncomment it if using json file directly
 	# file = 'data.json'
 	# data = data_generating(file)
 	# X_init,Y_init =data.generate_short_X()
